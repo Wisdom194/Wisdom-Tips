@@ -108,17 +108,30 @@ while (loop == 'true'):
         print "Wrong Username"
         os.system('xdg-open https://www.Youtube.com/UCe6wmIybCxpRSB4o6pozMOA')
 
-def login():
+######MASUK######
+def masuk():
 	os.system('clear')
-	try:
-		toket = open('login.txt','r')
-		menu() 
-	except (KeyError,IOError):
-		os.system('clear')
-		print logo
-		print 50*"\033[1;96m▪"
+	print logo
+	print "\033[1;97m ╔                                     ╗"
+	print "\033[1;97m  [\033[1;97m01\033[1;97m]\033[1;96m\033[1;97m Login With A New Facebook Account"
+	print "\033[1;97m  [\033[1;91m00\033[1;97m]\033[1;96m\033[1;97m Keluar"
+	print "\033[1;97m ╚                                     ╝"
+	pilih_masuk()
+
+def pilih_masuk():
+	msuk = raw_input("\033[1;97m [\033[1;91m•\033[1;97m•\033[1;97m]\033[1;97m ")
+	if msuk =="":
+		print"\033[1;97m[\033[1;91m!\033[1;97m] Harap Isi Dengan Benar !"
+		pilih_masuk()
+	elif msuk =="1" or msuk =="01":
+		tokenz()
+	elif msuk =="0" or msuk =="00":
+		keluar()
+	else:
+		print"\033[1;97m[\033[1;91m!\033[1;97m] Harap Isi Dengan Benar !"
+		pilih_masuk()
 		
-		
+#####LOGIN_TOKENZ#####
 def tokenz():
 	os.system('clear')
 	print logo
