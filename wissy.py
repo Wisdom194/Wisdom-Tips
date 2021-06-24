@@ -120,7 +120,7 @@ def login():
 		
 		
 		print('          \033[1;97m[◉] \x1b[1;96mLogin New Fresh Account \033[1;97m[◉]' )
-		def tokenz():
+def tokenz():
 	os.system('clear')
 	print logo
 	toket = raw_input("\033[1;97m[\033[1;39m?\033[1;97m] \33[31;1mToken : \33[31;1m")
